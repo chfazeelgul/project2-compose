@@ -1,0 +1,24 @@
+on: '3'
+
+services:
+    jenkins:
+          image: jenkins/jenkins:lts
+                container_name: jenkins
+                      ports:
+                              - "8080:8080"
+                                    volumes:
+                                            - jenkins_home:/var/jenkins_home
+                                                  environment:
+                                                          - JENKINS_OPTS=--prefix=/jenkins
+
+                                                              dind:
+                                                                    image: docker:dind
+                                                                          container_name: dind
+                                                                                privileged: true
+                                                                                      volumes:
+                                                                                              - jenkins_home:/var/jenkins_home
+                                                                                                    command: ["--insecure-registry", "dind:2375"]
+
+                                                                                                    volumes:
+                                                                                                        jenkins_home:
+
